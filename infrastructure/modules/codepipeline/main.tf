@@ -1,13 +1,3 @@
-data "terraform_remote_state" "terraform" {
-  backend = "s3"
-
-  config = {
-    bucket  = "lab-simulation-terraform" # Reference bucket for terraform state
-    key     = "bootstrap/terraform.tfstate"
-    region  = "eu-central-1"
-  }
-}
-
 resource "aws_s3_bucket" "s3_bucket_codepipeline" {
   bucket = var.bucket_name
   tags = var.tags

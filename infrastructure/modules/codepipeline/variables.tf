@@ -3,6 +3,16 @@ variable "bucket_name" {
   type        = string
 }
 
+variable "bootstrap_bucket" {
+  description = "Name of the Terraform bootstrap s3 bucket."
+  type        = string
+}
+
+variable "bootstrap_bucket_key" {
+  description = "Name of the Terraform bootstrap s3 bucket key."
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to set on the bucket."
   type        = map(string)
