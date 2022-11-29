@@ -8,3 +8,4 @@
         - do the `terraform init -backend-config=backend.hcl`
     - for infrastructure main infra
         - do the `terraform init -backend-config=backend.hcl`
+    - start your developing `terraform plan --var-file ../tfvars/infrastructure.tfvars `

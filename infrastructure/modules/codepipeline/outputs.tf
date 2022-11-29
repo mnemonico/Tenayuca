@@ -1,9 +1,14 @@
-output "arn" {
-  description = "ARN of the bucket"
-  value       = aws_s3_bucket.s3_bucket_codepipeline.arn
+output "id" {
+  description = "ARN of the code pipeline resource"
+  value       = aws_codepipeline.codepipeline.id
 }
 
 output "name" {
-  description = "Name (id) of the bucket"
-  value       = aws_s3_bucket.s3_bucket_codepipeline.id
+  description = "ARN of the code pipeline resource"
+  value       = aws_codepipeline.codepipeline.name
+}
+
+output "iam" {
+  description = "ARN of the code pipeline resource"
+  value       = aws_iam_role.codepipeline_role.arn
 }

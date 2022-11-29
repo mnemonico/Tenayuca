@@ -4,7 +4,7 @@ resource "aws_codepipeline" "codepipeline" {
   tags = var.tags
 
   artifact_store {
-    location = aws_s3_bucket.s3_bucket_codepipeline.bucket
+    location = var.codepipeline_bucket
     type     = "S3"
 
     encryption_key {
