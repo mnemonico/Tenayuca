@@ -1,0 +1,25 @@
+provider:
+  aws:
+    region: eu-central-1
+    backend:
+      environment:
+        prod:
+          s3bucket_bootstrap: null
+          s3bucket_bootstrap_key: null
+          s3bucket_infrastructure: null
+          s3bucket_infrastructure_key: null
+        pre-prod:
+          s3bucket_bootstrap: null
+          s3bucket_bootstrap_key: null
+          s3bucket_infrastructure: null
+          s3bucket_infrastructure_key: null
+        dev:
+          s3bucket_bootstrap: lab-simulation-terraform
+          s3bucket_bootstrap_key: bootstrap/terraform.tfstate
+          s3bucket_infrastructure: lab-simulation-terraform
+          s3bucket_infrastructure_key: infrastructure/terraform.tfstate
+        test:
+          s3bucket_bootstrap: null
+          s3bucket_bootstrap_key: null
+          s3bucket_infrastructure: null
+          s3bucket_infrastructure_key: null
