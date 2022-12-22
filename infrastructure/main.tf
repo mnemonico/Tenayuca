@@ -10,6 +10,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.0"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
   }
   backend "s3" {
     encrypt = true
@@ -44,8 +48,38 @@ module "codepipeline_module" {
   bootstrap_bucket = var.terraform_bucket.bootstrap_bucket
   bootstrap_bucket_key = var.terraform_bucket.bootstrap_bucket_key
 
+  codepipeline_project_name = var.codepipeline_project_name
+  repo_branch = var.source_repo_branch
+  repo_name = var.source_repo_name
+  stages = var.stage_input
+
   tags = {
     Terraform   = "true"
     Environment = var.environment
   }
+}
+
+module "codebuild_module" {
+  source = "./modules/codebuild"
+
+  codebuild_bucket = module.s3_module.codebuild-bucket-name
+  codebuild_bucket_arn = module.s3_module.codebuild-bucket-arn
+
+  region = var.terraform_bucket.region
+  bootstrap_bucket = var.terraform_bucket.bootstrap_bucket
+  bootstrap_bucket_key = var.terraform_bucket.bootstrap_bucket_key
+
+  codebuild_project_name = var.codebuild_project_name
+  codebuild_projects = var.build_projects
+  codebuild_project_source = var.build_project_source
+  codebuild_compute_type = var.build_compute_type
+  codebuild_image = var.build_image
+  codebuild_image_pull_credentials_type = var.build_image_pull_credentials_type
+  codebuild_type = var.build_type
+
+  tags = {
+    Terraform   = "true"
+    Environment = var.environment
+  }
+
 }

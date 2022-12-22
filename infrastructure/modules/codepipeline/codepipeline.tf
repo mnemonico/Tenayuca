@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "codepipeline" {
-  name     = "tf-test-pipeline"
+  name     = var.codepipeline_project_name
   role_arn = aws_iam_role.codepipeline_role.arn
   tags = var.tags
 
@@ -19,54 +19,38 @@ resource "aws_codepipeline" "codepipeline" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "AWS"
-      provider         = "CodeStarSourceConnection"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
       version          = "1"
-      output_artifacts = ["source_output"]
+      output_artifacts = ["SourceOutput"]
 
       configuration = {
         ConnectionArn    = aws_codestarconnections_connection.github.arn
-        FullRepositoryId = "mnemonico/cholula"
-        BranchName       = "main"
+        Owner  = "mnemonico"
+        FullRepositoryId = var.repo_name
+        BranchName       = var.repo_branch
       }
     }
   }
 
-  stage {
-    name = "Build"
+    dynamic "stage" {
+    for_each = var.stages
 
-    action {
-      name             = "Build"
-      category         = "Build"
-      owner            = "AWS"
-      provider         = "CodeBuild"
-      input_artifacts  = ["source_output"]
-      output_artifacts = ["build_output"]
-      version          = "1"
+    content {
+      name = "Stage-${stage.value["name"]}"
+      action {
+        category         = stage.value["category"]
+        name             = "Action-${stage.value["name"]}"
+        owner            = stage.value["owner"]
+        provider         = stage.value["provider"]
+        input_artifacts  = [stage.value["input_artifacts"]]
+        output_artifacts = [stage.value["output_artifacts"]]
+        version          = "1"
+        run_order        = index(var.stages, stage.value) + 2
 
-      configuration = {
-        ProjectName = "test"
-      }
-    }
-  }
-
-  stage {
-    name = "Deploy"
-
-    action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "CloudFormation"
-      input_artifacts = ["build_output"]
-      version         = "1"
-
-      configuration = {
-        ActionMode     = "REPLACE_ON_FAILURE"
-        Capabilities   = "CAPABILITY_AUTO_EXPAND,CAPABILITY_IAM"
-        OutputFileName = "CreateStackOutput.json"
-        StackName      = "MyStack"
-        TemplatePath   = "build_output::sam-templated.yaml"
+        configuration = {
+          ProjectName = stage.value["provider"] == "CodeBuild" ? "${var.codepipeline_project_name}-${stage.value["name"]}" : null
+        }
       }
     }
   }
