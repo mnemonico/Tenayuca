@@ -12,11 +12,11 @@ project = {
   provision = "Terraform"
 }
 
-codepipeline_project_name = "tf-codepipeline-project"
-codebuild_project_name = "tf-codebuild-project"
+cicd_project_name = "tf-cicd-project"
 environment = "dev"
 source_repo_name   = "mnemonico/cholula"
 source_repo_branch = "main"
+build_image = "aws/codebuild/standard:4.0"
 # create_new_repo    = false
 # repo_approvers_arn = "arn:aws:sts::123456789012:assumed-role/CodeCommitReview/*" #Update ARN (IAM Role/User/Group) of Approval Members
 # create_new_role    = true
@@ -25,4 +25,4 @@ stage_input = [
 #  { name = "test", category = "Test", owner = "AWS", provider = "CodeBuild", input_artifacts = "InstallOutput", output_artifacts = "TestOutput" },
 #  { name = "validate", category = "Test", owner = "AWS", provider = "CodeBuild", input_artifacts = "TestOutput", output_artifacts = "ValidateOutput" }
 ]
-build_projects = ["buildspec"]#, "install", "test", "validate"]
+build_projects = ["build"]#, "install", "test", "validate"]

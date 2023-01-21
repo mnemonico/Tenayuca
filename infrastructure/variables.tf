@@ -69,8 +69,8 @@ variable "source_repo_branch" {
   nullable = false
 }
 
-variable "codepipeline_project_name" {
-  description = "CodePipeline project name"
+variable "cicd_project_name" {
+  description = "CodePipeline and CodeBuild project name"
   type = string
   nullable = false
 }
@@ -78,12 +78,6 @@ variable "codepipeline_project_name" {
 variable "stage_input" {
   description = "Tags to be attached to the CodePipeline"
   type        = list(map(any))
-}
-
-variable "codebuild_project_name" {
-  description = "CodeBuild project name"
-  type = string
-  nullable = false
 }
 
 variable "build_projects" {

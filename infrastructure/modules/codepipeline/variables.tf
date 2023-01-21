@@ -23,7 +23,7 @@ variable "codepipeline_bucket_arn" {
   type        = string
 }
 
-variable "codepipeline_project_name" {
+variable "cicd_project_name" {
   description = "CodePipeline project name"
   type = string
 }
@@ -36,6 +36,11 @@ variable "repo_name" {
 variable "repo_branch" {
   description = "name of the branch"
   type = string
+}
+
+variable "codebuild_projects" {
+  description = "Terraform bucket region."
+  type        = list(string)
 }
 
 variable "stages" {

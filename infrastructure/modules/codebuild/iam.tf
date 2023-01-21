@@ -66,6 +66,35 @@ resource "aws_iam_role_policy" "codebuild_role_policy" {
         "${var.codebuild_bucket_arn}",
         "${var.codebuild_bucket_arn}/*"
       ]
+    },
+{
+      "Effect":"Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning",
+        "s3:PutObjectAcl",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "${var.codepipeline_bucket_arn}",
+        "${var.codepipeline_bucket_arn}/*"
+      ]
+    },
+    {
+      "Sid": "Stmt1674324837625",
+      "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+        "kms:GetKeyPolicy",
+        "kms:ListAliases",
+        "kms:ListKeyPolicies",
+        "kms:ListKeys"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:kms:eu-central-1:202415221250:key/${data.terraform_remote_state.terraform.outputs.kms-s3}"
     }
   ]
 }

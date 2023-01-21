@@ -23,7 +23,12 @@ variable "codebuild_bucket_arn" {
   type        = string
 }
 
-variable "codebuild_project_name" {
+variable "codepipeline_bucket_arn" {
+  description = "Name of the code pipeline s3 bucket."
+  type        = string
+}
+
+variable "cicd_project_name" {
   description = "CodePipeline project name"
   type = string
 }

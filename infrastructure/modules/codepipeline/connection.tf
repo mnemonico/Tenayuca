@@ -1,4 +1,4 @@
-resource "aws_codestarconnections_connection" "github_codepipeline" {
+resource "aws_codestarconnections_connection" "github-codepipeline" {
   name          = "mnemonico-connection"
   provider_type = "GitHub"
   tags = var.tags

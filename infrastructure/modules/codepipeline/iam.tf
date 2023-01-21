@@ -40,11 +40,26 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
       ]
     },
     {
+      "Sid": "Stmt1674324837624",
+      "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+        "kms:GetKeyPolicy",
+        "kms:ListAliases",
+        "kms:ListKeyPolicies",
+        "kms:ListKeys"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:kms:eu-central-1:202415221250:key/${data.terraform_remote_state.terraform.outputs.kms-s3}"
+    },
+    {
       "Effect": "Allow",
       "Action": [
         "codestar-connections:UseConnection"
       ],
-      "Resource": "${aws_codestarconnections_connection.github_codepipeline.arn}"
+      "Resource": "${aws_codestarconnections_connection.github-codepipeline.arn}"
     },
     {
       "Effect": "Allow",

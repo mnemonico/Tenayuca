@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "codepipeline" {
-  name     = var.codepipeline_project_name
+  name     = var.cicd_project_name
   role_arn = aws_iam_role.codepipeline_role.arn
   tags = var.tags
 
@@ -25,7 +25,7 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["SourceOutput"]
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github_codepipeline.arn
+        ConnectionArn    = aws_codestarconnections_connection.github-codepipeline.arn
         #Owner  = "AWS"
         FullRepositoryId = var.repo_name
         BranchName       = var.repo_branch
@@ -49,7 +49,7 @@ resource "aws_codepipeline" "codepipeline" {
         run_order        = index(var.stages, stage.value) + 2
 
         configuration = {
-          ProjectName = stage.value["provider"] == "CodeBuild" ? "${var.codepipeline_project_name}-${stage.value["name"]}" : null
+          ProjectName = stage.value["provider"] == "CodeBuild" ? "${var.cicd_project_name}-${stage.value["name"]}" : null
         }
       }
     }

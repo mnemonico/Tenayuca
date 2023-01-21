@@ -1,7 +1,7 @@
 resource "aws_codebuild_project" "codebuild_project_terraform_plan" {
   count = length(var.codebuild_projects)
 
-  name = "${var.codebuild_project_name}-${var.codebuild_projects[count.index]}"
+  name = "${var.cicd_project_name}-${var.codebuild_projects[count.index]}"
   description   = "Terraform codebuild project"
   build_timeout = "6"
   service_role  = aws_iam_role.codebuild_role.arn
@@ -35,13 +35,13 @@ resource "aws_codebuild_project" "codebuild_project_terraform_plan" {
 
     s3_logs {
       status   = "ENABLED"
-      location = "${var.codebuild_bucket}/${var.codebuild_project_name}/build-log"
+      location = "${var.codebuild_bucket}/${var.cicd_project_name}/build-log"
     }
   }
 
   source {
     type      = var.codebuild_project_source
-    buildspec = "./templates/stages/${var.codebuild_projects[count.index]}.yml"
+    buildspec = "./templates/stages/${var.codebuild_projects[count.index]}/buildspec.yml"
   }
 
   tags = {
