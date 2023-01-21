@@ -3,7 +3,7 @@ resource "aws_codebuild_project" "codebuild_project_terraform_plan" {
 
   name = "${var.codebuild_project_name}-${var.codebuild_projects[count.index]}"
   description   = "Terraform codebuild project"
-  build_timeout = "5"
+  build_timeout = "6"
   service_role  = aws_iam_role.codebuild_role.arn
 
   artifacts {
@@ -17,13 +17,13 @@ resource "aws_codebuild_project" "codebuild_project_terraform_plan" {
 
   environment {
     compute_type                = var.codebuild_compute_type #"BUILD_GENERAL1_SMALL"
-    image                       = var.codebuild_image #"aws/codebuild/standard:2.0"
+    image                       = var.codebuild_image #aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     type                        = var.codebuild_type #"LINUX_CONTAINER"
     image_pull_credentials_type = var.codebuild_image_pull_credentials_type #"CODEBUILD"
 
     environment_variable {
-      name  = "TERRAFORM_VERSION"
-      value = "0.12.16"
+      name  = "CHOLULA"
+      value = "0.0.1"
     }
   }
 
@@ -41,7 +41,7 @@ resource "aws_codebuild_project" "codebuild_project_terraform_plan" {
 
   source {
     type      = var.codebuild_project_source
-    buildspec = "./templates/stages/buildspec_${var.codebuild_projects[count.index]}.yml"
+    buildspec = "./templates/stages/${var.codebuild_projects[count.index]}.yml"
   }
 
   tags = {

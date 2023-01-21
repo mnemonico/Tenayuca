@@ -21,8 +21,8 @@ source_repo_branch = "main"
 # repo_approvers_arn = "arn:aws:sts::123456789012:assumed-role/CodeCommitReview/*" #Update ARN (IAM Role/User/Group) of Approval Members
 # create_new_role    = true
 stage_input = [
-  { name = "install", category = "Build", owner = "AWS", provider = "CodeBuild", input_artifacts = "SourceOutput", output_artifacts = "InstallOutput" },
-  { name = "test", category = "Test", owner = "AWS", provider = "CodeBuild", input_artifacts = "InstallOutput", output_artifacts = "TestOutput" },
-  { name = "validate", category = "Test", owner = "AWS", provider = "CodeBuild", input_artifacts = "TestOutput", output_artifacts = "ValidateOutput" }
+  { name = "build", category = "Build", owner = "AWS", provider = "CodeBuild", input_artifacts = "SourceOutput", output_artifacts = "BuildOutput" },
+#  { name = "test", category = "Test", owner = "AWS", provider = "CodeBuild", input_artifacts = "InstallOutput", output_artifacts = "TestOutput" },
+#  { name = "validate", category = "Test", owner = "AWS", provider = "CodeBuild", input_artifacts = "TestOutput", output_artifacts = "ValidateOutput" }
 ]
-build_projects = ["install", "test", "validate"]
+build_projects = ["buildspec"]#, "install", "test", "validate"]

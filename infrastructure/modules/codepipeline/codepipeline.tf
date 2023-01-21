@@ -19,14 +19,14 @@ resource "aws_codepipeline" "codepipeline" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["SourceOutput"]
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github.arn
-        Owner  = "mnemonico"
+        ConnectionArn    = aws_codestarconnections_connection.github_codepipeline.arn
+        #Owner  = "AWS"
         FullRepositoryId = var.repo_name
         BranchName       = var.repo_branch
       }

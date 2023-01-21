@@ -3,15 +3,12 @@ version: 0.2
 env:
   variables:
     CODE_SRC_DIR: "."
-    SCRIPT_DIR: "./templates/scripts"
     NONESENSE_EVAR: "ACHRAF BAIZ"
-    ENVIRONMENT: "dev"
 
 phases:
   install:
     runtime-versions:
       python: 3.8
-      golang: 1.14
     commands:
       # Install httpie
       - curl -SsL https://packages.httpie.io/deb/KEY.gpg | apt-key add -
@@ -20,20 +17,13 @@ phases:
       - apt install httpie
   build:
     commands:
-      - ls -l
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - ls -l
+      - http --version
+      - http PUT pie.dev/put X-API-Token:123 name=John
       - "echo ## echo the player"
       - "/bin/bash ${CODEBUILD_SRC_DIR}/${SCRIPT_DIR}/echoer.sh"
+
 artifacts:
   files:
     - '**/*'
-#reports:
-#  checkov-reports:
-#    files:
-#      - "./reports/checkov.xml"
-#    file-format: "JUNITXML"
-#  tfsec-reports:
-#    files:
-#      - "./reports/tfsec-junit.xml"
-#    file-format: "JUNITXML"

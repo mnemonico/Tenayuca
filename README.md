@@ -7,5 +7,5 @@
     - for bootstrap infra
         - do the `terraform init -backend-config=backend.hcl`
     - for infrastructure main infra
-        - do the `terraform init -backend-config=backend.hcl`
-    - start your developing `terraform plan --var-file ../tfvars/infrastructure.tfvars `
+        - do the `terraform init -backend-config=../tfbackend/infrastructure.hcl`
+    - start your developing `terraform plan --var-file ../tfvars/infrastructure.tfvars`

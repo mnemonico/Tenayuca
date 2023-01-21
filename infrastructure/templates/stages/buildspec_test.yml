@@ -3,22 +3,22 @@ version: 0.2
 env:
   variables:
     CODE_SRC_DIR: "."
-    TF_VERSION: "1.1.6"
+    NONESENSE_EVAR: "ACHRAF BAIZ"
 
 phases:
   install:
     runtime-versions:
       python: 3.8
     commands:
-      - "curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
-      - "unzip -o terraform.zip"
-      - "mv terraform /bin"
-      - "rm terraform.zip"
+      # Install httpie
+      - curl -SsL https://packages.httpie.io/deb/KEY.gpg | apt-key add -
+      - curl -SsL -o /etc/apt/sources.list.d/httpie.list https://packages.httpie.io/deb/httpie.list
+      - apt update
+      - apt install httpie
   build:
     commands:
-      - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
-      - "echo ## TERRAFORM APPLY : Starting with the Terraform Apply"
-      - "terraform apply -input=false tfapply"
+      - ls -l
+      - http PUT pie.dev/put X-API-Token:123 name=John
 
 artifacts:
   files:
