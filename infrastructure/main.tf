@@ -86,3 +86,27 @@ module "codebuild_module" {
   }
 
 }
+
+module "kms_module" {
+  source = "./modules/kms"
+
+  kms_codeartifact = "kms-codeartifact"
+
+  tags = {
+    Terraform   = "true"
+    Environment = var.environment
+  }
+}
+
+module "codeartifact_module" {
+  source = "./modules/codeartifact"
+
+  codeartifact_key = module.kms_module.kms-codeartifact-arn
+  codeartifact_domain = "vanilla"
+  codeartifact_repo = "vanilla-repo"
+
+  tags = {
+    Terraform   = "true"
+    Environment = var.environment
+  }
+}
