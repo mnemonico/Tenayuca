@@ -2,6 +2,7 @@ variable "environment" {
   description = "Environment"
   type = string
   nullable = false
+  default = "dev"
 }
 
 variable "project" {
